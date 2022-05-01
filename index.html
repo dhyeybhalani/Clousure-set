@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/brython@3.10.5/brython.min.js">
+    </script>
+    <title>Clousure</title>
+</head>
+<body onload="brython()" class="bg-cyan-600 m-8"> 
+    <h1 class="text-center text-7xl text-white font-serif">Clousure</h1>
+    <script type="text/python">
+        from browser import document, alert
+        def clousure(event):
+            document.getElementById("myDiv").textContent='';
+            b = list(map(str,document["Attributes"].value.split()))
+            a = document["fd"].value
+            col = list(document["col"].value.split())
+            a = a.split(" ")
+            l = list()
+            for i in a:
+                temp = i.split("->")
+                l.append(temp)
+            z = 0
+            flag1 = 0
+            for i in col:
+                if i not in b:
+                    flag1 = 1
+                    break
+            if(flag1 == 0):
+                while (z <= 1):
+                    for i in l:
+                        document.getElementById("myDiv").innerHTML += "{0},elements in clousure set: {1} <br>".format("->".join(i),"".join(col))
+                        if len(i[0]) == 1:
+                            if i[0] in col and i[1] not in col:
+                                document.getElementById("myDiv").innerHTML += "Element Found! <br>"
+                                if len(i[1]) == 1:
+                                    col.append(i[1])
+                                else:
+                                    temp = i[1].strip()
+                                    for k in temp:
+                                        col.append(k)
+                                document.getElementById("myDiv").innerHTML += "elements in clousure set: {0} <br>".format("".join(col))
+                                document.getElementById("myDiv").innerHTML += "<br>"
+                            elif i[1] in col:
+                                document.getElementById("myDiv").innerHTML += "Element alread in clousure set <br>"
+                                document.getElementById("myDiv").innerHTML += "<br>"
+                            else:
+                                document.getElementById("myDiv").innerHTML += "Element Not Found <br>" 
+                                document.getElementById("myDiv").innerHTML += "<br>"
+                        else:
+                            temp = i[0].strip()
+                            flag = 0
+                            for k in temp:
+                                if k not in col:
+                                    flag = 1
+                            if flag == 0 and i[1] not in col:
+                                document.getElementById("myDiv").innerHTML += "Element Found! <br>"
+                                col.append(i[1])
+                                document.getElementById("myDiv").innerHTML += "elements in clousure set: {0} <br>".format("".join(col))
+                                document.getElementById("myDiv").innerHTML += "<br>"
+                            else:
+                                document.getElementById("myDiv").innerHTML += "element not found <br>"
+                                document.getElementById("myDiv").innerHTML += "<br>"
+                            flag = 0
+                    z += 1
+                document.getElementById("myDiv").innerHTML += " ".join(set(col))
+                document.getElementById("myDiv").style.display = "";
+            else:
+                alert("Clousure cannot be found.")
+                document.getElementById("myDiv").style.display = none;
+        document["btn"].bind("click", clousure)
+    </script>  
+    <div class="bg-white rounded-md p-5 m-8">
+        <div class="flex items-center border-b border-teal-500 py-2">
+            <input id="Attributes"class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Enter Attributes" aria-label="Full name">
+        </div>
+        <div class="flex items-center border-b border-teal-500 py-2">
+            <input id="fd" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Enter FDs" aria-label="Full name">
+            
+        </div>
+        <div class="flex items-center border-b border-teal-500 py-2">
+            <input id="col" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Enter Clousure element" aria-label="Full name">            
+        </div>
+        <button id="btn"type="button" class="m-3 text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 shadow-lg shadow-cyan-500/50 dark:shadow-lg dark:shadow-cyan-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Find Clousure</button>
+    </div>
+    <div id="myDiv" style="display:none;" class="bg-white rounded-md p-5 m-8" ></div>
+
+</body>
+</html>
